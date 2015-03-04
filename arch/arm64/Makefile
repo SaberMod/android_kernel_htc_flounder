@@ -33,13 +33,14 @@ GRAPHITE_FLAGS := \
     -floop-strip-mine \
     -floop-block \
 
-SABERMOD_OPTIMIZATIONS := \
+SABERMOD_FLAGS := \
 	$(call cc-option,-Wno-error=maybe-uninitialized) \
+	$(call cc-option,-Wno-error=array-bounds) \
 	$(call cc-option,-march=armv8-a) \
 	-O3 \
 	$(GRAPHITE_FLAGS)
 
-KBUILD_CFLAGS	+= -mgeneral-regs-only $(SABERMOD_OPTIMIZATIONS)
+KBUILD_CFLAGS	+= -mgeneral-regs-only $(SABERMOD_FLAGS)
 ifeq ($(CONFIG_CPU_BIG_ENDIAN), y)
 KBUILD_CPPFLAGS	+= -mbig-endian
 AS		+= -EB
