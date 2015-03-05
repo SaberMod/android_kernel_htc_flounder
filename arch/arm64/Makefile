@@ -23,22 +23,12 @@ KBUILD_DEFCONFIG := defconfig
 
 # SaberMod optimizations
 
-GRAPHITE_FLAGS := \
-    -fgraphite \
-    -fgraphite-identity \
-    -floop-flatten \
-    -floop-parallelize-all \
-    -ftree-loop-linear \
-    -floop-interchange \
-    -floop-strip-mine \
-    -floop-block \
-
 SABERMOD_FLAGS := \
+	-O3 \
 	$(call cc-option,-Wno-error=maybe-uninitialized) \
 	$(call cc-option,-Wno-error=array-bounds) \
-	$(call cc-option,-march=armv8-a) \
-	-O3 \
-	$(GRAPHITE_FLAGS)
+	$(call cc-option,$(kernel_arch_variant_cflags)) \
+	$(GRAPHITE_KERNEL_FLAGS)
 
 KBUILD_CFLAGS	+= -mgeneral-regs-only $(SABERMOD_FLAGS)
 ifeq ($(CONFIG_CPU_BIG_ENDIAN), y)
